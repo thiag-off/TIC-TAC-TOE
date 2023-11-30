@@ -1,5 +1,5 @@
 
-
+import random
 import math
 
 class ComputerPlayer:
@@ -10,17 +10,11 @@ class ComputerPlayer:
     def find_best_move(self,board):
         
         best_eval = -math.inf
-        
         best_move = None
-        for row in range(3):
-            for col in range(3):
-                if board[row][col] == 0:
-                    board[row][col] = self.player[0]
-                    eval = self.mini_max(board, False)
-                    board[row][col] = 0
-                    if eval > best_eval:                        
-                        best_eval = eval
-                        best_move = [row, col]
+        moves_made = []
+
+        best_move = self.random_point(board, moves_made, best_eval, best_move)
+        print(best_move)
         
         return best_move
 
@@ -84,14 +78,24 @@ class ComputerPlayer:
             return scores[winner]   
 
 
-    def random_point(board):
-        
-        rand1 = random.randint(0,2)
-        rand2 = random.randint(0,2)
+    def random_point(self,board, moves_made, best_eval, best_move ):        
+      
+        while len(moves_made) < sum(row.count(0) for row in board):
 
-        if board[0].count(0) > 0 or board[1].count(0) > 0 or board[2].count(0) > 0:
-            if board[rand1][rand2] == 0 :
-                return rand1, rand2
-                   
-            else:                
-                self.random_point(board)        
+            rand1 = random.randint(0,2)
+            rand2 = random.randint(0,2)
+        
+            while (rand1,rand2) in moves_made or board[rand1][rand2] != 0:
+
+                rand1 = random.randint(0, 2)
+                rand2 = random.randint(0, 2)
+            
+            board[rand1][rand2] = self.player[0]
+            eval = self.mini_max(board, False) 
+            moves_made.append((rand1,rand2))
+            board[rand1][rand2] = 0
+            if eval > best_eval:                        
+                    best_eval = eval
+                    best_move = [rand1, rand2]
+            
+        return best_move        
