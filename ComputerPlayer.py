@@ -5,11 +5,15 @@ import math
 class ComputerPlayer:
     def __init__(self,player):
         self.player = player
+        self.computer_symbol = self.player[1]
         
    
     def find_best_move(self,board):
         
-        best_eval = -math.inf
+        if self.computer_symbol == self.player[0]:
+            best_eval = -math.inf
+        else:
+            best_eval = math.inf
         best_move = None
         moves_made = []
 
@@ -29,7 +33,6 @@ class ComputerPlayer:
                 for col in range(3):
                     if board[row][col] == 0:
                         board[row][col] = self.player[0]
-                        #print(board)
                         eval = self.mini_max(board, False)
                         board[row][col] = 0
                         max_eval = max(eval, max_eval)
@@ -90,12 +93,21 @@ class ComputerPlayer:
                 rand1 = random.randint(0, 2)
                 rand2 = random.randint(0, 2)
             
-            board[rand1][rand2] = self.player[0]
-            eval = self.mini_max(board, False) 
-            moves_made.append((rand1,rand2))
-            board[rand1][rand2] = 0
-            if eval > best_eval:                        
-                    best_eval = eval
-                    best_move = [rand1, rand2]
-            
+            if self.computer_symbol == self.player[0]:
+                board[rand1][rand2] = self.player[0]
+                eval = self.mini_max(board, False) 
+                moves_made.append((rand1,rand2))
+                board[rand1][rand2] = 0
+                if eval > best_eval:                        
+                        best_eval = eval
+                        best_move = [rand1, rand2]
+            else:
+                board[rand1][rand2] = self.player[1]
+                eval = self.mini_max(board, True) 
+                moves_made.append((rand1,rand2))
+                board[rand1][rand2] = 0
+                if eval < best_eval:                        
+                        best_eval = eval
+                        best_move = [rand1, rand2]   
+                       
         return best_move        
