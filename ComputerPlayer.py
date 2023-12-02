@@ -3,9 +3,9 @@ import random
 import math
 
 class ComputerPlayer:
-    def __init__(self,player):
+    def __init__(self,player,computer_symbol):
         self.player = player
-        self.computer_symbol = self.player[1]
+        self.computer_symbol = computer_symbol
         
    
     def find_best_move(self,board):
@@ -44,7 +44,6 @@ class ComputerPlayer:
                 for col in range(3):
                     if board[row][col] == 0:
                         board[row][col] = self.player[1]
-                        #print(board)
                         eval = self.mini_max(board, True)
                         board[row][col] = 0
                         min_eval = min(eval , min_eval)

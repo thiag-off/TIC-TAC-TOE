@@ -8,8 +8,8 @@ class Game:
     def __init__(self, update_button, declare_winner):        
               
         self.player = ["X", "O"]
-        self.computer_role = self.player[1]
-        self.computer_player = ComputerPlayer(self.player)
+        self.computer_role = self.player[0]
+        self.computer_player = ComputerPlayer(self.player, self.computer_role)
         self.update_button_callback = update_button
         self.declare_winner_callback = declare_winner
         self.set_game()
@@ -32,18 +32,17 @@ class Game:
         if self.is_cell_empty(row, col):
             self.board[row][col] = self.current_player
             self.update_button_callback(row,col, self.board[row][col])
-            self.check_for_winner()
-            
-            if not self.winner:
-                self.switch_turn()
-                if self.computer_role == self.current_player:
-                    self.computer_move()
+            self.switch_turn()
+            self.check_for_winner()           
+           
+            if self.computer_role == self.current_player and not self.winner :
+                self.computer_move()
 
                         
    
     def check_for_winner(self):        
 
-        self.check_collumns()
+        self.check_columns()
         self.check_rows()
         self.check_diagonals()
         self.check_tie()  
@@ -59,7 +58,7 @@ class Game:
                 self.winner = row[0]  
                 break
 
-    def check_collumns(self):
+    def check_columns(self):
         for col in range(len(self.board)):
             if self.board[0][col] == self.board[1][col] == self.board[2][col] and self.board[0] [col]!= 0:
                 self.winner = self.board[0][col]

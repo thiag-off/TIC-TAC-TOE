@@ -6,8 +6,8 @@ class BoardGUI:
         
         self.master = master
         self.master.title("TIC TAC TOE")
-        self.game = Game(self.update_button, self.declare_winner)
         self.draw_board()
+        self.game = Game(self.update_button, self.declare_winner)
 
     def draw_board(self):
         for i in range(3):
@@ -35,8 +35,8 @@ class BoardGUI:
         answer = messagebox.askyesno("Fim de Jogo", message + " Quer jogar novamente?")
 
         if answer:
-            self.game.set_game()
             self.draw_board()
+            self.game.set_game()
         else:
             self.master.quit()                           
                        

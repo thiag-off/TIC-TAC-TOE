@@ -2,10 +2,15 @@ import tkinter as tk
 import customtkinter
 from Game import Game
 from BoardGUI import BoardGUI
+from SetupScreen import SetupScreen
 
 def main():
-    root = tk.Tk()
-    board = BoardGUI(root)    
+    customtkinter.set_appearance_mode("dark")
+    customtkinter.set_default_color_theme("blue")
+
+    root = customtkinter.CTk()
+    setup = SetupScreen(root) 
+
     root.mainloop()
 
 if __name__ == "__main__":
