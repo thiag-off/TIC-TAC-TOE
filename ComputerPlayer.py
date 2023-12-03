@@ -18,7 +18,7 @@ class ComputerPlayer:
         moves_made = []
 
         best_move = self.random_point(board, moves_made, best_eval, best_move)
-        print(best_move)
+        #Sprint(best_move)
         
         return best_move
 

@@ -1,14 +1,11 @@
 import random 
 from ComputerPlayer import ComputerPlayer
-
-
-
-
 class Game:
-    def __init__(self, update_button, declare_winner):        
-              
+    def __init__(self, update_button, declare_winner, player_symbol):        
+
+        self.player_symbol = player_symbol      
         self.player = ["X", "O"]
-        self.computer_role = self.player[0]
+        self.computer_role = self.player[0] if player_symbol == self.player[1] else self.player[1]
         self.computer_player = ComputerPlayer(self.player, self.computer_role)
         self.update_button_callback = update_button
         self.declare_winner_callback = declare_winner
@@ -79,16 +76,5 @@ class Game:
 
     def is_cell_empty(self, row, col):
         return self.board[row][col] == 0      
-
-
-
-
-
-
-
-        
-
-
- 
-
-        
+   
+       

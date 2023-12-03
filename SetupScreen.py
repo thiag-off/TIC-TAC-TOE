@@ -8,6 +8,7 @@ class SetupScreen:
         
         self.master = master
         self.master.geometry("850x500")
+        self.master.title("MENU - TIC TAC TOE")
         self.frame = customtkinter.CTkFrame(master = self.master)
         self.frame.pack(pady = 20, padx = 60, fill="both", expand=True)
         self.label = customtkinter.CTkLabel(master= self.frame, text="Menu", font=("Montserrat", 24))
@@ -35,7 +36,8 @@ class SetupScreen:
         self.frame_2.pack(pady = 12, padx = 10)
         self.radiobutton_frame.pack(pady = 12, padx = 10)
         
-        
+        self.label_optionmenu = customtkinter.CTkLabel(master= self.frame, text="Play as: " , font=("Montserrat", 24))
+        self.label_optionmenu.pack(pady = 12, padx = 10)
         self.optionmenu = customtkinter.CTkOptionMenu(master= self.frame, values=["X", "O"], state="disabled")        
         self.optionmenu.pack(pady=12, padx = 10)
         
@@ -47,8 +49,8 @@ class SetupScreen:
         opponent_type = "Friend" if self.radio_var.get() == 0 else "Computer"
         player_symbol = self.optionmenu.get()
 
-        print(opponent_type, player_symbol, self.radio_var.get())
+       
 
         self.master.withdraw()
         root = tkinter.Tk()
-        board = BoardGUI(root)
+        board = BoardGUI(root, opponent_type, player_symbol)

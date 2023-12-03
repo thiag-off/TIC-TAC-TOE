@@ -2,12 +2,14 @@ import tkinter as tk
 from tkinter import messagebox
 from Game import Game
 class BoardGUI:
-    def __init__(self,master):
+    def __init__(self,master, opponent_type, player_symbol):
         
         self.master = master
+        self.opponent_type = opponent_type
+        self.player_symbol = player_symbol
         self.master.title("TIC TAC TOE")
         self.draw_board()
-        self.game = Game(self.update_button, self.declare_winner)
+        self.game = Game(self.update_button, self.declare_winner, self.player_symbol)
 
     def draw_board(self):
         for i in range(3):
