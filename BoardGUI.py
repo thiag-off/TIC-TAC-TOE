@@ -9,7 +9,7 @@ class BoardGUI:
         self.player_symbol = player_symbol
         self.master.title("TIC TAC TOE")
         self.draw_board()
-        self.game = Game(self.update_button, self.declare_winner, self.player_symbol)
+        self.game = Game(self.update_button, self.declare_winner, self.player_symbol, self.opponent_type)
 
     def draw_board(self):
         for i in range(3):
