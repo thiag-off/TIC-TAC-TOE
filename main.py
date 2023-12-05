@@ -6,10 +6,11 @@ from SetupScreen import SetupScreen
 
 def main():
     customtkinter.set_appearance_mode("dark")
-    customtkinter.set_default_color_theme("blue")
+    customtkinter.set_default_color_theme("dark-blue")
 
     root = customtkinter.CTk()
-    setup = SetupScreen(root) 
+    setup = SetupScreen(root)
+    
 
     root.mainloop()
 
