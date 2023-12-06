@@ -4,13 +4,15 @@ from tkinter import messagebox
 from Game import Game
 
 class BoardGUI:
-    def __init__(self, master, opponent_type, player_symbol):
+    def __init__(self, master, opponent_type, player_symbol, setup_screen_callback):
         
         self.master = master
         self.master.title("TIC TAC TOE")
         self.master.geometry("650x500")
         self.opponent_type = opponent_type
         self.player_symbol = player_symbol
+
+        self.setup_screen_callback = setup_screen_callback
         
         self.board = customtkinter.CTkFrame(master= self.master)
         self.board.pack(pady = 20, padx = 60, expand=True)
@@ -48,7 +50,11 @@ class BoardGUI:
             self.draw_board()
             self.game.set_game()
         else:
-            self.master.quit()                           
+            
+            for widget in self.master.winfo_children():
+                widget.pack_forget()
+            
+            self.setup_screen_callback()                       
 
     
 

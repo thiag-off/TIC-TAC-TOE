@@ -5,8 +5,11 @@ from BoardGUI import BoardGUI
 
 class SetupScreen:
     def __init__(self, master):          
-        
+         
         self.master = master
+        self.create_screen()
+       
+    def create_screen(self):
         self.master.geometry("650x500")
         self.master.title("MENU - TIC TAC TOE")
 
@@ -35,12 +38,12 @@ class SetupScreen:
         
         #Radio-Button-1
         self.radio_button_1 = customtkinter.CTkRadioButton(master=self.radiobutton_frame, variable=self.radio_var,
-         value=0, text= "Friend", command= lambda: self.optionmenu.configure(state = "disabled"))
+        value=0, text= "Friend", command= lambda: self.optionmenu.configure(state = "disabled"))
         self.radio_button_1.grid(row=1, column=2, pady=10, padx=20, sticky="n")
         
         #Radio-Button-2
         self.radio_button_2 = customtkinter.CTkRadioButton(master=self.radiobutton_frame, variable=self.radio_var, value=1,
-         text= "Computer", command= lambda: self.optionmenu.configure(state = "normal"))
+        text= "Computer", command= lambda: self.optionmenu.configure(state = "normal"))
         self.radio_button_2.grid(row=2, column=2, pady=10, padx=20, sticky="n")
         
         #Play-As-Text
@@ -53,7 +56,7 @@ class SetupScreen:
         
         #Start-Button
         self.button_1 = customtkinter.CTkButton(master = self.frame, text="Start", font=("Montserrat", 18),
-         command = lambda: self.start_game(self.master) )
+        command = lambda: self.start_game(self.master) )
         self.button_1.pack(pady = 12, padx = 10)
     
 
@@ -65,6 +68,6 @@ class SetupScreen:
         for widget in self.master.winfo_children():
                 widget.pack_forget()
                 
-        board = BoardGUI(self.master, opponent_type, player_symbol)
+        board = BoardGUI(self.master, opponent_type, player_symbol, self.create_screen)
 
         
