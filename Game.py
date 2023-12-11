@@ -57,25 +57,33 @@ class Game:
                 break
 
     def check_columns(self):
+       
         for col in range(len(self.board)):
+           
             if self.board[0][col] == self.board[1][col] == self.board[2][col] and self.board[0] [col]!= 0:
                 self.winner = self.board[0][col]
+             
                 break
 
     def check_diagonals(self):
-         if self.board[0][0] == self.board[1][1] == self.board[2][2] or self.board[0][2] == self.board[1][1] == self.board[2][0]:
+        
+        if self.board[0][0] == self.board[1][1] == self.board[2][2] or self.board[0][2] == self.board[1][1] == self.board[2][0]:
+            
             if self.board[1][1] != 0:
                 self.winner = self.board[1][1]     
 
     def check_tie(self):
+        
         if all([all(row) for row in self.board]) and self.winner is None:
+
          self.winner = "Deu Velha!"
 
 
     def switch_turn(self):
-        self.current_player = self.player[1] if self.current_player == self.player[0] else self.player[0]   
+        self.current_player = { self.player[0]: self.player[1],
+                                self.player[1]: self.player[0] }[self.current_player]   
 
     def is_cell_empty(self, row, col):
-        return self.board[row][col] == 0      
+        return self.board[row][col] in [0]      
    
        
