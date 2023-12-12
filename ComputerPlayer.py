@@ -11,55 +11,47 @@ class ComputerPlayer:
    
     def find_best_move(self, board):
         
-        best_eval = self.best_eval_setup(self.computer_symbol)              
+        best_evaluation = self.best_evaluation_setup(self.computer_symbol)              
 
         possible_moves = self.get_random_possible_moves(board)
 
-        for possible_move in possible_moves:
-            
+        for possible_move in possible_moves:                        
             board[possible_move[0]][possible_move[1]] = self.computer_symbol
-
-            eval = self.mini_max(board, self.is_maximizing(self.next_player(self.computer_symbol))) 
-            
+            evaluation = self.mini_max(board, self.next_player(self.computer_symbol))            
             board[possible_move[0]][possible_move[1]] = 0
 
             if self.is_maximizing(self.computer_symbol):
-                if eval > best_eval:                        
-                        best_eval = eval
+                if evaluation > best_evaluation:                        
+                        best_evaluation = evaluation
                         best_move = [possible_move[0], possible_move[1]]
             else:
-                if eval < best_eval:                        
-                        best_eval = eval
+                if evaluation < best_evaluation:                        
+                        best_evaluation = evaluation
                         best_move = [possible_move[0], possible_move[1]]   
                     
         
         return best_move
 
-    def mini_max(self,board, isMaximizing):
+    def mini_max(self, board: list , player : str) -> int:
 
-        eval = self.check_for_winner(board)
-        if eval is not None:
-            return eval
+        evaluation = self.check_for_winner(board)
+        
+        if evaluation is not None:
+            return evaluation
 
-        elif isMaximizing:
-            max_eval = -math.inf
-
-            for possible_move in self.get_ordered_possible_moves(board):
-                    board[possible_move[0]][possible_move[1]] = self.player[0]
-                    eval = self.mini_max(board, False)
-                    board[possible_move[0]][possible_move[1]] = 0
-                    max_eval = max(eval, max_eval)
-            return max_eval
-
-        else :
-            min_eval = math.inf
-            for possible_move in self.get_ordered_possible_moves(board):
-                    board[possible_move[0]][possible_move[1]] = self.player[1]
-                    eval = self.mini_max(board, True)
-                    board[possible_move[0]][possible_move[1]] = 0
-                    min_eval = min(eval , min_eval)
-            return min_eval
+        
+        min_max_evaluation = self.best_evaluation_setup(player)
+        
+        for possible_move in self.get_ordered_possible_moves(board):
             
+            board[possible_move[0]][possible_move[1]] = player
+            evaluation = self.mini_max(board, self.next_player(player))
+            board[possible_move[0]][possible_move[1]] = 0
+            
+            min_max_evaluation = self.get_min_max_evaluation(evaluation , min_max_evaluation, player)
+
+        return min_max_evaluation
+        
                   
 
 
@@ -116,7 +108,7 @@ class ComputerPlayer:
             "O" : "X"
         }[current_player]
 
-    def best_eval_setup(self, player : str) -> int:  
+    def best_evaluation_setup(self, player : str) -> int:  
         
         if self.is_maximizing(player):
 
@@ -124,4 +116,14 @@ class ComputerPlayer:
 
         else:
             
-            return math.inf               
+            return math.inf        
+
+    def get_min_max_evaluation(self, evaluation , min_max_evaluation, player):
+
+        if self.is_maximizing(player):
+            return max(evaluation, min_max_evaluation)
+        else:   
+            return min(evaluation , min_max_evaluation)
+
+
+
