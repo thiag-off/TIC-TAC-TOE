@@ -17,6 +17,7 @@ class ComputerPlayer:
             current_move_evaluation = self.mini_max(
                 board, self.next_player(self.computer_symbol)
             )
+
             board[possible_move[0]][possible_move[1]] = 0
 
             if self.is_maximizing(self.computer_symbol):

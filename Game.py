@@ -1,5 +1,6 @@
 import random
 from ComputerPlayer import ComputerPlayer
+from Board import Board
 
 
 class Game:
@@ -17,7 +18,8 @@ class Game:
 
     def set_game(self):
         self.winner = None
-        self.board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+        self.game_board = Board()
+        # self.board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
         self.current_player = self.player[0]
 
         if (
@@ -27,13 +29,13 @@ class Game:
             self.computer_move()
 
     def computer_move(self):
-        move = self.computer_player.find_best_move(self.board[:])
+        move = self.computer_player.find_best_move(self.game_board.get_board())
         self.handle_click(move[0], move[1])
 
     def handle_click(self, row, col):
-        if self.is_cell_empty(row, col):
-            self.board[row][col] = self.current_player
-            self.update_button_callback(row, col, self.board[row][col])
+        if self.game_board.is_cell_empty(row, col):
+            self.game_board.mark_board(row, col, self.current_player)
+            self.update_button_callback(row, col, self.game_board.get_cell(row, col))
             self.switch_turn()
             self.check_for_winner()
 
@@ -45,41 +47,10 @@ class Game:
                 self.computer_move()
 
     def check_for_winner(self):
-        self.check_columns()
-        self.check_rows()
-        self.check_diagonals()
-        self.check_tie()
+        self.winner = self.game_board.check_for_winner()
 
         if self.winner:
             self.declare_winner_callback(self.winner)
-
-    def check_rows(self):
-        for row in self.board:
-            if row.count(row[0]) == len(row) and row[0] != 0:
-                self.winner = row[0]
-                break
-
-    def check_columns(self):
-        for col in range(len(self.board)):
-            if (
-                self.board[0][col] == self.board[1][col] == self.board[2][col]
-                and self.board[0][col] != 0
-            ):
-                self.winner = self.board[0][col]
-
-                break
-
-    def check_diagonals(self):
-        if (
-            self.board[0][0] == self.board[1][1] == self.board[2][2]
-            or self.board[0][2] == self.board[1][1] == self.board[2][0]
-        ):
-            if self.board[1][1] != 0:
-                self.winner = self.board[1][1]
-
-    def check_tie(self):
-        if all([all(row) for row in self.board]) and self.winner is None:
-            self.winner = "Deu Velha!"
 
     def switch_turn(self):
         self.current_player = {

@@ -45,8 +45,8 @@ class BoardGUI:
         button.configure(text=symbol)
 
     def declare_winner(self, winner):
-        if winner == "Deu Velha!":
-            message = winner
+        if winner == "tie":
+            message = "Deu Velha!"
 
         else:
             message = f"{winner}  venceu."
