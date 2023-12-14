@@ -1,5 +1,6 @@
 import random
 import math
+from Board import Board
 
 
 class ComputerPlayer:
@@ -7,18 +8,18 @@ class ComputerPlayer:
         self.player = player
         self.computer_symbol = computer_symbol
 
-    def find_best_move(self, board: list) -> list:
+    def find_best_move(self, board: Board) -> list:
         best_evaluation = self.initialize_best_evaluation(self.computer_symbol)
 
         possible_moves = self.get_random_possible_moves(board)
 
         for possible_move in possible_moves:
-            board[possible_move[0]][possible_move[1]] = self.computer_symbol
+            board.mark(possible_move[0], possible_move[1], self.computer_symbol)
             current_move_evaluation = self.mini_max(
                 board, self.next_player(self.computer_symbol)
             )
 
-            board[possible_move[0]][possible_move[1]] = 0
+            board.unmark(possible_move[0], possible_move[1])
 
             if self.is_maximizing(self.computer_symbol):
                 if current_move_evaluation > best_evaluation:
@@ -31,7 +32,7 @@ class ComputerPlayer:
 
         return best_move
 
-    def mini_max(self, board: list, player: str) -> int:
+    def mini_max(self, board: Board, player: str) -> int:
         current_move_evaluation = self.check_for_winner(board)
 
         if current_move_evaluation is not None:
@@ -40,9 +41,9 @@ class ComputerPlayer:
         min_max_evaluation = self.initialize_best_evaluation(player)
 
         for possible_move in self.get_ordered_possible_moves(board):
-            board[possible_move[0]][possible_move[1]] = player
+            board.mark(possible_move[0], possible_move[1], player)
             current_move_evaluation = self.mini_max(board, self.next_player(player))
-            board[possible_move[0]][possible_move[1]] = 0
+            board.unmark(possible_move[0], possible_move[1])
 
             min_max_evaluation = self.calculate_min_max_evaluation(
                 current_move_evaluation, min_max_evaluation, player
@@ -50,46 +51,22 @@ class ComputerPlayer:
 
         return min_max_evaluation
 
-    def check_for_winner(self, board):
-        winner = None
+    def check_for_winner(self, board: Board):
+        winner = board.check_for_winner()
         scores = {"tie": 0, "X": 1, "O": -1}
-
-        for row in board:
-            if row.count(row[0]) == len(row) and row[0] != 0:
-                winner = row[0]
-                break
-
-        for col in range(len(board)):
-            if board[0][col] == board[1][col] == board[2][col] and board[0][col] != 0:
-                winner = board[0][col]
-                break
-
-        if (
-            board[0][0] == board[1][1] == board[2][2]
-            or board[0][2] == board[1][1] == board[2][0]
-        ):
-            if board[1][1] != 0:
-                winner = board[1][1]
-
-        if all([all(row) for row in board]) and winner is None:
-            winner = "tie"
 
         if winner != None:
             return scores[winner]
 
-    def get_random_possible_moves(self, board: list) -> list:
+    def get_random_possible_moves(self, board: Board) -> list:
         possible_moves = self.get_ordered_possible_moves(board)
 
         random.shuffle(possible_moves)
 
         return possible_moves
 
-    def get_ordered_possible_moves(self, board: list) -> list:
-        possible_moves = [
-            (row, col) for row in range(3) for col in range(3) if board[row][col] == 0
-        ]
-
-        return possible_moves
+    def get_ordered_possible_moves(self, board: Board) -> list:
+        return board.find_all_empty_cells()
 
     def is_maximizing(self, player: str) -> bool:
         return player == "X"

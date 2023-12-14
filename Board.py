@@ -4,7 +4,7 @@ class Board:
 
     def handle_click(self, player):
         if self.is_cell_empty():
-            self.mark_board(row, col, player)
+            self.mark(row, col, player)
 
     def check_for_winner(self) -> str:
         winner = None
@@ -40,10 +40,10 @@ class Board:
     def get_cell(self, row: int, col: int) -> str | int:
         return self.board[row][col]
 
-    def mark_board(self, row: int, col: int, player: str) -> None:
+    def mark(self, row: int, col: int, player: str) -> None:
         self.board[row][col] = player
 
-    def unmark_board(self, row: int, col: int, player: str) -> None:
+    def unmark(self, row: int, col: int) -> None:
         self.board[row][col] = 0
 
     def find_all_empty_cells(self) -> list:

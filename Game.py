@@ -1,6 +1,7 @@
 import random
 from ComputerPlayer import ComputerPlayer
 from Board import Board
+import copy
 
 
 class Game:
@@ -29,12 +30,12 @@ class Game:
             self.computer_move()
 
     def computer_move(self):
-        move = self.computer_player.find_best_move(self.game_board.get_board())
+        move = self.computer_player.find_best_move(copy.copy(self.game_board))
         self.handle_click(move[0], move[1])
 
     def handle_click(self, row, col):
         if self.game_board.is_cell_empty(row, col):
-            self.game_board.mark_board(row, col, self.current_player)
+            self.game_board.mark(row, col, self.current_player)
             self.update_button_callback(row, col, self.game_board.get_cell(row, col))
             self.switch_turn()
             self.check_for_winner()
