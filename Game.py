@@ -20,7 +20,6 @@ class Game:
     def set_game(self):
         self.winner = None
         self.game_board = Board()
-        # self.board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
         self.current_player = self.player[0]
 
         if (
