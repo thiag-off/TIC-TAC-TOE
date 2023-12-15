@@ -1,6 +1,6 @@
 import random
 import math
-from Board import Board
+from board import Board
 
 
 class ComputerPlayer:

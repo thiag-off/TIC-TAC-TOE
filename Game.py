@@ -1,6 +1,6 @@
 import random
-from ComputerPlayer import ComputerPlayer
-from Board import Board
+from computer_player import ComputerPlayer
+from board import Board
 import copy
 
 

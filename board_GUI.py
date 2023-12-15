@@ -1,7 +1,7 @@
 import customtkinter
 import tkinter as tk
 from tkinter import messagebox
-from Game import Game
+from game import Game
 
 
 class BoardGUI:

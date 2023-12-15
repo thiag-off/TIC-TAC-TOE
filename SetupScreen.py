@@ -1,7 +1,7 @@
 import customtkinter
 import tkinter
 import tkinter.messagebox
-from BoardGUI import BoardGUI
+from board_GUI import BoardGUI
 
 
 class SetupScreen:

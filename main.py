@@ -1,8 +1,8 @@
 import tkinter as tk
 import customtkinter
-from Game import Game
-from BoardGUI import BoardGUI
-from SetupScreen import SetupScreen
+from game import Game
+from board_GUI import BoardGUI
+from setup_screen import SetupScreen
 
 
 def main():
