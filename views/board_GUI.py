@@ -1,7 +1,8 @@
+from abc import ABC
+
 import customtkinter
-import tkinter as tk
 from tkinter import messagebox
-from game import Game
+from controllers import Game
 
 
 class BoardGUI:
@@ -40,9 +41,10 @@ class BoardGUI:
                 )
                 button.grid(row=i, column=j, sticky="nsew", pady=12, padx=10)
 
-    def update_button(self, row, col, symbol):
-        button = self.board.grid_slaves(row=row, column=col)[0]
-        button.configure(text=symbol)
+    def update_button(self):
+        move = self.game.get_last_move()
+        button = self.board.grid_slaves(row=move[0], column=move[1])[0]
+        button.configure(text=move[2])
 
     def declare_winner(self, winner):
         if winner == "tie":

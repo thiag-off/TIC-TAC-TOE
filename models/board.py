@@ -2,8 +2,8 @@ class Board:
     def __init__(self):
         self.board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
 
-    def handle_click(self, player):
-        if self.is_cell_empty():
+    def handle_click(self, player, row, col):
+        if self.is_cell_empty(row, col):
             self.mark(row, col, player)
 
     def check_for_winner(self) -> str:
