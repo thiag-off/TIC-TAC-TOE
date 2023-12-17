@@ -4,18 +4,19 @@ from models import ComputerPlayer, Board
 
 
 class Game:
-    def __init__(self, update_button, declare_winner, player_symbol, opponent_type):
+    def __init__(self, player_symbol, opponent_type, game_manager):
+        self.game_board = None
+        self.current_player = None
+        self.last_move_made = None
         self.player_symbol = player_symbol
         self.player = ["X", "O"]
-        self.last_move_made = None
         self.computer_role = (
             self.player[0] if player_symbol == self.player[1] else self.player[1]
         )
         self.computer_player = ComputerPlayer(self.player, self.computer_role)
         self.is_computer_player_enabled = opponent_type == "Computer"
-        self.update_button_callback = update_button
-        self.declare_winner_callback = declare_winner
-        self.set_game()
+        self.game_manager = game_manager
+        self.winner = None
 
     def set_game(self):
         self.last_move_made = None
@@ -37,7 +38,7 @@ class Game:
         if self.game_board.is_cell_empty(row, col):
             self.game_board.mark(row, col, self.current_player)
             self.last_move_made = [row, col, self.game_board.get_cell(row, col)]
-            self.update_button_callback()
+            self.game_manager.update()
             self.switch_turn()
             self.check_for_winner()
 
@@ -52,7 +53,7 @@ class Game:
         self.winner = self.game_board.check_for_winner()
 
         if self.winner:
-            self.declare_winner_callback(self.winner)
+            self.game_manager.declare()
 
     def switch_turn(self):
         self.current_player = {
@@ -60,5 +61,11 @@ class Game:
             self.player[1]: self.player[0],
         }[self.current_player]
 
-    def get_last_move(self):
+    def get_current_player(self):
+        return self.current_player
+
+    def get_winner(self):
+        return self.winner
+
+    def get_last_move_made(self):
         return self.last_move_made

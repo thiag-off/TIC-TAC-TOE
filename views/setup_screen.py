@@ -1,7 +1,8 @@
 import customtkinter
 import tkinter
 import tkinter.messagebox
-from views import BoardGUI
+from controllers.game_manager import GameManager
+
 
 
 class SetupScreen:
@@ -90,4 +91,4 @@ class SetupScreen:
         for widget in self.master.winfo_children():
             widget.pack_forget()
 
-        board = BoardGUI(self.master, opponent_type, player_symbol, self.create_screen)
+        game_manager = GameManager(self.master,self.create_screen, player_symbol, opponent_type)

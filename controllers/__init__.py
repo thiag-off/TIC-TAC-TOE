@@ -1,1 +1,2 @@
-from controllers.game import Game
+from controllers.game_manager import GameManager
+

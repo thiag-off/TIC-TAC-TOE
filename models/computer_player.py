@@ -1,7 +1,6 @@
 import random
 import math
 
-
 from models.board import Board
 
 
@@ -57,7 +56,7 @@ class ComputerPlayer:
         winner = board.check_for_winner()
         scores = {"tie": 0, "X": 1, "O": -1}
 
-        if winner != None:
+        if winner is not None:
             return scores[winner]
 
     def get_random_possible_moves(self, board: Board) -> list:
@@ -80,7 +79,7 @@ class ComputerPlayer:
         return {"X": -math.inf, "O": math.inf}[player]
 
     def calculate_min_max_evaluation(
-        self, current_move_evaluation: int, min_max_evaluation: int, player: str
+            self, current_move_evaluation: int, min_max_evaluation: int, player: str
     ) -> int:
         return {
             "X": max(current_move_evaluation, min_max_evaluation),
