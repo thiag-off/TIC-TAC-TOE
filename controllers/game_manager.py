@@ -3,15 +3,13 @@ from models import Game
 
 
 class GameManager:
+    def __init__(self, game: object, board_GUI: object):
+        self.game = game
+        self.board_GUI = board_GUI
 
-    def __init__(self, master, create_screen, player_symbol, opponent_type):
-        self.player_symbol = player_symbol
-        self.opponent_type = opponent_type
-        self.master = master
-        self.create_screen = create_screen
+        self.game.set_manager(self)
+        self.board_GUI.set_manager(self)
 
-        self.game = Game(self.player_symbol, self.opponent_type, self)
-        self.board_GUI = BoardGUI(self.master, self, self.create_screen)
         self.set_game()
 
     def update(self):
@@ -31,4 +29,3 @@ class GameManager:
 
     def get_winner(self):
         return self.game.get_winner()
-

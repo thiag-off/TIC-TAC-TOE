@@ -4,7 +4,7 @@ from models import ComputerPlayer, Board
 
 
 class Game:
-    def __init__(self, player_symbol, opponent_type, game_manager):
+    def __init__(self, player_symbol, opponent_type):
         self.game_board = None
         self.current_player = None
         self.last_move_made = None
@@ -15,8 +15,12 @@ class Game:
         )
         self.computer_player = ComputerPlayer(self.player, self.computer_role)
         self.is_computer_player_enabled = opponent_type == "Computer"
-        self.game_manager = game_manager
+        self.game_manager: object
+
         self.winner = None
+
+    def set_manager(self, manager: object):
+        self.game_manager = manager
 
     def set_game(self):
         self.last_move_made = None
@@ -25,8 +29,8 @@ class Game:
         self.current_player = self.player[0]
 
         if (
-                self.is_computer_player_enabled
-                and self.computer_role == self.current_player
+            self.is_computer_player_enabled
+            and self.computer_role == self.current_player
         ):
             self.computer_move()
 
@@ -43,9 +47,9 @@ class Game:
             self.check_for_winner()
 
             if (
-                    self.is_computer_player_enabled
-                    and self.computer_role == self.current_player
-                    and not self.winner
+                self.is_computer_player_enabled
+                and self.computer_role == self.current_player
+                and not self.winner
             ):
                 self.computer_move()
 
