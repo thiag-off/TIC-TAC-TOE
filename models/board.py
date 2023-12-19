@@ -1,7 +1,4 @@
 class Board:
-    def __init__(self):
-        self.board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
-
     def handle_click(self, player, row, col):
         if self.is_cell_empty(row, col):
             self.mark(row, col, player)
@@ -56,3 +53,6 @@ class Board:
 
     def get_board(self) -> list:
         return self.board
+
+    def set_default(self):
+        self.board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]

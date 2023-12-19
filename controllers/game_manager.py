@@ -1,22 +1,18 @@
-from views import BoardGUI
-from models import Game
-
-
 class GameManager:
-    def __init__(self, game: object, board_GUI: object):
+    def __init__(self, game: object, game_view: object):
         self.game = game
-        self.board_GUI = board_GUI
+        self.game_view = game_view
 
         self.game.set_manager(self)
-        self.board_GUI.set_manager(self)
+        self.game_view.set_manager(self)
 
         self.set_game()
 
     def update(self):
-        self.board_GUI.update_button()
+        self.game_view.update_button()
 
     def declare(self):
-        self.board_GUI.declare_winner()
+        self.game_view.declare_winner()
 
     def set_game(self):
         self.game.set_game()

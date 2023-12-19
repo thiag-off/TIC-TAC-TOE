@@ -5,9 +5,9 @@ from models.board import Board
 
 
 class ComputerPlayer:
-    def __init__(self, player, computer_symbol):
-        self.player = player
-        self.computer_symbol = computer_symbol
+    def __init__(self, human_symbol):
+        self.player = ["X", "O"]
+        self.computer_symbol = {"X": "O", "O": "X"}[human_symbol]
 
     def find_best_move(self, board: Board) -> list:
         best_evaluation = self.initialize_best_evaluation(self.computer_symbol)
@@ -79,9 +79,12 @@ class ComputerPlayer:
         return {"X": -math.inf, "O": math.inf}[player]
 
     def calculate_min_max_evaluation(
-            self, current_move_evaluation: int, min_max_evaluation: int, player: str
+        self, current_move_evaluation: int, min_max_evaluation: int, player: str
     ) -> int:
         return {
             "X": max(current_move_evaluation, min_max_evaluation),
             "O": min(current_move_evaluation, min_max_evaluation),
         }[player]
+
+    def get_computer_role(self):
+        return self.computer_symbol

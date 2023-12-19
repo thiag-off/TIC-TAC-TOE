@@ -84,12 +84,12 @@ class SetupScreen:
         self.button_1.pack(pady=12, padx=10)
 
     def start_game(self, master):
-        opponent_type = "Friend" if self.radio_var.get() == 0 else "Computer"
+        computer_player_enabled = False if self.radio_var.get() == 0 else True
         player_symbol = self.optionmenu.get()
 
         for widget in self.master.winfo_children():
             widget.pack_forget()
 
         game_creator = GameCreator(
-            self.master, self.create_screen, player_symbol, opponent_type
+            self.master, self.create_screen, player_symbol, computer_player_enabled
         )

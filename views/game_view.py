@@ -2,7 +2,7 @@ import customtkinter
 from tkinter import messagebox
 
 
-class BoardGUI:
+class GameView:
     def __init__(self, master, setup_screen_callback):
         self.master = master
         self.master.title("TIC TAC TOE")
